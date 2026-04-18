@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
-from app_front.views import home
+from backend.app_front.views import home
 from rest_framework_simplejwt.views import TokenRefreshView
-from users.authentication import EmailTokenObtainPairView
+from backend.users.authentication import EmailTokenObtainPairView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
