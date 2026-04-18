@@ -7,6 +7,7 @@ import  AdoptionSection  from "./components/AdoptionSection";
 import { AboutSection } from "./components/AboutSection";
 import { Footer } from "./components/Footer";
 import { AuthModal } from "./components/AuthModal";
+import { DonationSection } from "./components/Donation";
 
 export default function Home() {
    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function Home() {
         isOpen={isAuthModalOpen} 
         onClose={() => setIsAuthModalOpen(false)} 
       />
+      
     </div>
   );
 }

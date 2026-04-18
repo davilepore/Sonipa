@@ -1,18 +1,22 @@
 "use client";
-import { Heart, Sparkles } from "lucide-react";
+import { Heart, Sparkles, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { DonationSection } from "./Donation";
 
 interface HeroProps {
   onAdoptClick: () => void;
 }
 
 export function Hero({ onAdoptClick }: HeroProps) {
+  const [isDonating, setIsDonating] = useState(false);
   const [userName, setUserName] = useState(() => {
     if (typeof window === "undefined") return "";
     return localStorage.getItem("user_name") || "";
   });
-  const userNameFormatted = userName ? userName.charAt(0).toUpperCase() + userName.slice(1) : "";
+  const userNameFormatted = userName
+    ? userName.charAt(0).toUpperCase() + userName.slice(1)
+    : "";
   return (
     <section id="inicio" className="pt-24 pb-16 bg-white">
       <div className="container mx-auto px-4">
@@ -20,9 +24,9 @@ export function Hero({ onAdoptClick }: HeroProps) {
           <div className="space-y-6">
             {userName && (
               <h2 className="text-lg text-gray-600">
-                Olá,{" "} 
+                Olá,{" "}
                 <span className="font-bold" style={{ color: "#EEA71E" }}>
-                   {userNameFormatted}
+                  {userNameFormatted}
                 </span>
               </h2>
             )}
@@ -87,6 +91,21 @@ export function Hero({ onAdoptClick }: HeroProps) {
                 <p className="text-gray-600">Anos de Missão</p>
               </div>
             </div>
+            <div>
+              <Button
+                size="lg"
+                className="text-lg p-5 border-2 hover:bg-opacity-10"
+                style={{ backgroundColor: "#23809B", color: "#ffffff" }}
+                onClick={() => setIsDonating(true)}
+              >
+                Fazer uma doação
+              </Button>
+            </div>
+            {isDonating && (
+             <div className="fixed inset-0 bg-transparent backdrop-blur-2xl flex items-center justify-center z-50 flex-col  ">
+              <DonationSection/>
+              </div>
+            )}
           </div>
 
           <div className="relative">
