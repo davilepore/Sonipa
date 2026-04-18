@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     'animals',
     'events',
     'donations',
-    'app_front',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -77,6 +77,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
+
+CORS_ALLOW_ALL_ORIGINS = True  # permite que frontend (localhost:3000) acesse backend (localhost:8000)
 
 
 # Database
@@ -145,3 +147,6 @@ SIMPLE_JWT = {
 STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = 'users.User'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

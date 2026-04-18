@@ -1,19 +1,19 @@
 from django.contrib import admin
 from django.urls import path, include
-from backend.app_front.views import home
 from rest_framework_simplejwt.views import TokenRefreshView
-from backend.users.authentication import EmailTokenObtainPairView
+from users.authentication import EmailTokenObtainPairView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('api/', include('donations.urls')),  # API de doações
-    path('api/', include('animals.urls')),    # API de animais
-    path('api/', include('events.urls')),     # API de eventos
+    path('api/', include('donations.urls')),
+    path('api/', include('animals.urls')),
+    path('api/', include('events.urls')),
+    path('api/', include('users.urls')),
 
-    # Autenticação JWT
     path('api/token/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    path('', home),  # raiz do site retorna a homepage
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

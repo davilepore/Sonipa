@@ -1,25 +1,33 @@
-from rest_framework import generics, permissions
-from .models import Donation
-from .serializers import DonationSerializer
+import mercadopago
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
-class DonationListCreateView(generics.ListCreateAPIView):
-    """
-    GET → lista todas as doações do usuário logado
-    POST → cria uma nova doação (física ou financeira)
-    """
-    serializer_class = DonationSerializer
-    permission_classes = [permissions.IsAuthenticated]  # só usuários logados podem criar/listar
+sdk = mercadopago.SDK("SEU_ACCESS_TOKEN_AQUI")
 
-    def get_queryset(self):
-        # Usuário vê apenas suas próprias doações
-        return Donation.objects.filter(nome_doador=self.request.user.username)
+class CreateDonationView(APIView):
+    def post(self, request):
+        print("dados recebidos:", request.data)  # ← adicione isso
+        valor = request.data.get('valor')
+        email = request.data.get('email')
+        print("valor:", valor, "email:", email)  # ← e isso
+        payment_data = {
+            "transaction_amount": float(valor),
+            "description": "Doação para SONIPA",
+            "payment_method_id": "pix",
+            "payer": {
+                "email": email,
+            }
+        }
 
-    def perform_create(self, serializer):
-        """
-        Ao criar uma doação:
-        - Para doações físicas, status inicial será 'pendente'
-        - Para doações financeiras, status inicial será 'pendente' (a ser atualizado após confirmação)
-        - Associamos o nome do doador ao usuário logado
-        """
-        nome = self.request.user.username  # pega nome do usuário logado
-        serializer.save(nome_doador=nome)
+        result = sdk.payment().create(payment_data)
+        payment = result["response"]
+
+        if result["status"] == 201:
+            return Response({
+                "qr_code": payment["point_of_interaction"]["transaction_data"]["qr_code"],
+                "qr_code_base64": payment["point_of_interaction"]["transaction_data"]["qr_code_base64"],
+                "payment_id": payment["id"],
+            })
+
+        return Response({"error": "Erro ao criar pagamento"}, status=status.HTTP_400_BAD_REQUEST)
