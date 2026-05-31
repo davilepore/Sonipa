@@ -58,13 +58,23 @@ TEMPLATES = [
 ]
 
 # ── Banco de dados (Supabase via DATABASE_URL) ─────────────
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True,  # Supabase exige SSL
-    )
-}
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # ── Autenticação ───────────────────────────────────────────
 AUTH_USER_MODEL = 'users.User'
