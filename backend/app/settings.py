@@ -10,6 +10,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-w==#ki*imv^-kb+1r-#$x
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:3000').split(',')
+
 # ── Apps ───────────────────────────────────────────────────
 INSTALLED_APPS = [
     'django.contrib.admin',
