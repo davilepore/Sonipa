@@ -3,19 +3,19 @@
 import { useState } from "react";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import  AdoptionSection  from "./components/AdoptionSection";
+import AdoptionSection from "./components/AdoptionSection";
 import { AboutSection } from "./components/AboutSection";
 import { Footer } from "./components/Footer";
 import { AuthModal } from "./components/AuthModal";
 import { DonationSection } from "./components/Donation";
 
 export default function Home() {
-   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const scrollToAdoption = () => {
-    const adoptionSection = document.getElementById('adocao');
+    const adoptionSection = document.getElementById("adocao");
     if (adoptionSection) {
-      adoptionSection.scrollIntoView({ behavior: 'smooth' });
+      adoptionSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -25,12 +25,12 @@ export default function Home() {
       <Hero onAdoptClick={scrollToAdoption} />
       <AdoptionSection />
       <AboutSection />
+      <DonationSection />
       <Footer />
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
       />
-      
     </div>
   );
 }

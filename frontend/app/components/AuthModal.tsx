@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { X, Mail, Lock, User, Phone } from "lucide-react";
@@ -27,52 +27,56 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   if (!isOpen) return null;
 
- const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
-  setLoginError("");
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setLoginError("");
 
-  try {
-    await loginUser(loginEmail, loginPassword);
-    const user = await getMe();                           // ← busca dados do usuário
-    if (user) localStorage.setItem("user_name", user.nome); // ← salva nome
-    onClose();
-    window.location.reload();
-  } catch (err) {
-    setLoginError("Email ou senha inválidos");
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      await loginUser(loginEmail, loginPassword);
+      const user = await getMe();
+      if (user) localStorage.setItem("user_name", user.nome);
+      onClose();
+      window.location.reload();
+    } catch (err) {
+      setLoginError("Email ou senha inválidos");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const handleRegister = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (registerPassword !== registerConfirmPassword) {
-    setRegisterError("As senhas não coincidem");
-    return;
-  }
+    if (registerPassword !== registerConfirmPassword) {
+      setRegisterError("As senhas não coincidem");
+      return;
+    }
 
-  setLoading(true);
-  setRegisterError("");
+    setLoading(true);
+    setRegisterError("");
 
-  try {
-    await registerUser(registerName, registerEmail, registerPhone, registerPassword);
-    await loginUser(registerEmail, registerPassword);
-    const user = await getMe();                           // ← busca dados do usuário
-    if (user) localStorage.setItem("user_name", user.nome); // ← salva nome
-    onClose();
-    window.location.reload();
-  } catch (err) {
-    setRegisterError("Erro ao cadastrar. Verifique os dados.");
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      await registerUser(
+        registerName,
+        registerEmail,
+        registerPhone,
+        registerPassword,
+      );
+      await loginUser(registerEmail, registerPassword);
+      const user = await getMe();
+      if (user) localStorage.setItem("user_name", user.nome); // ← salva nome
+      onClose();
+      window.location.reload();
+    } catch (err) {
+      setRegisterError("Erro ao cadastrar. Verifique os dados.");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        {/* Header */}
         <div className="relative p-6 border-b">
           <h2 className="text-2xl font-bold text-gray-900 text-center">
             Bem-vindo à SONIPA
@@ -85,7 +89,6 @@ const handleRegister = async (e: React.FormEvent) => {
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6">
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
@@ -93,7 +96,6 @@ const handleRegister = async (e: React.FormEvent) => {
               <TabsTrigger value="register">Cadastrar</TabsTrigger>
             </TabsList>
 
-            {/* Login Tab */}
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
@@ -133,7 +135,11 @@ const handleRegister = async (e: React.FormEvent) => {
                     <input type="checkbox" className="rounded" />
                     <span className="text-gray-600">Lembrar-me</span>
                   </label>
-                  <a href="#" className="hover:opacity-80" style={{ color: "#EEA71E" }}>
+                  <a
+                    href="#"
+                    className="hover:opacity-80"
+                    style={{ color: "#EEA71E" }}
+                  >
                     Esqueceu a senha?
                   </a>
                 </div>
@@ -156,7 +162,9 @@ const handleRegister = async (e: React.FormEvent) => {
                   <button
                     type="button"
                     onClick={() => {
-                      const registerTab = document.querySelector('[value="register"]') as HTMLElement;
+                      const registerTab = document.querySelector(
+                        '[value="register"]',
+                      ) as HTMLElement;
                       registerTab?.click();
                     }}
                     className="font-medium hover:opacity-80"
@@ -168,7 +176,6 @@ const handleRegister = async (e: React.FormEvent) => {
               </form>
             </TabsContent>
 
-            {/* Register Tab */}
             <TabsContent value="register">
               <form onSubmit={handleRegister} className="space-y-4">
                 <div className="space-y-2">
@@ -237,7 +244,9 @@ const handleRegister = async (e: React.FormEvent) => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="register-confirm-password">Confirmar Senha</Label>
+                  <Label htmlFor="register-confirm-password">
+                    Confirmar Senha
+                  </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <Input
@@ -245,7 +254,9 @@ const handleRegister = async (e: React.FormEvent) => {
                       type="password"
                       placeholder="••••••••"
                       value={registerConfirmPassword}
-                      onChange={(e) => setRegisterConfirmPassword(e.target.value)}
+                      onChange={(e) =>
+                        setRegisterConfirmPassword(e.target.value)
+                      }
                       className="pl-10"
                       required
                       minLength={6}
@@ -254,14 +265,30 @@ const handleRegister = async (e: React.FormEvent) => {
                 </div>
 
                 <div className="flex items-start gap-2">
-                  <input type="checkbox" id="terms" className="mt-1 rounded" required />
-                  <label htmlFor="terms" className="text-sm text-gray-600 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    className="mt-1 rounded"
+                    required
+                  />
+                  <label
+                    htmlFor="terms"
+                    className="text-sm text-gray-600 cursor-pointer"
+                  >
                     Eu concordo com os{" "}
-                    <a href="#" className="hover:opacity-80" style={{ color: "#EEA71E" }}>
+                    <a
+                      href="#"
+                      className="hover:opacity-80"
+                      style={{ color: "#EEA71E" }}
+                    >
                       Termos de Uso
                     </a>{" "}
                     e{" "}
-                    <a href="#" className="hover:opacity-80" style={{ color: "#EEA71E" }}>
+                    <a
+                      href="#"
+                      className="hover:opacity-80"
+                      style={{ color: "#EEA71E" }}
+                    >
                       Política de Privacidade
                     </a>
                   </label>
@@ -285,7 +312,9 @@ const handleRegister = async (e: React.FormEvent) => {
                   <button
                     type="button"
                     onClick={() => {
-                      const loginTab = document.querySelector('[value="login"]') as HTMLElement;
+                      const loginTab = document.querySelector(
+                        '[value="login"]',
+                      ) as HTMLElement;
                       loginTab?.click();
                     }}
                     className="font-medium hover:opacity-80"

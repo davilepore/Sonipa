@@ -1,9 +1,10 @@
 "use client";
 
-import { Heart, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useState } from "react";
+import Image from "next/image";
 
 interface DogCardProps {
   id: number;
@@ -29,24 +30,18 @@ export function DogCard({
   adotante,
 }: DogCardProps) {
   const [selecionado, setSelecionado] = useState(false);
-  const dataResgateFormatada = new Date(data_resgate).toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  const dataResgateFormatada = new Date(data_resgate).toLocaleDateString(
+    "pt-BR",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    },
+  );
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition group">
-      <div className="relative h-64 overflow-hidden">
-        <img
-          src={foto}
-          alt={nome}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-        />
-        <div className="absolute top-4 right-4">
-          <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-amber-50 transition">
-            <Heart className="w-5 h-5" style={{ color: "#EEA71E" }} />
-          </button>
-        </div>
+      <div className="relative h-64 overflow-hidden mb-4">
+        <Image src={foto} alt={nome} fill className="object-cover" />
         <div className="absolute top-4 left-4">
           <Badge
             className="hover:opacity-90"
@@ -85,14 +80,19 @@ export function DogCard({
         <div className="fixed inset-0 bg-transparent backdrop-blur-2xl flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md mx-auto shadow-lg">
             <div className="relative h-64 overflow-hidden mb-4">
-              <img src={foto} alt={nome}  />   
+              <Image
+                src={foto}
+                alt={nome}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform"
+              />
               <div className="absolute top-4 left-4">
-              <Badge
-                className="hover:opacity-90"
-                style={{ backgroundColor: "#EEA71E", color: "#ffffff" }}
-              >
-                {especie}
-              </Badge>
+                <Badge
+                  className="hover:opacity-90"
+                  style={{ backgroundColor: "#EEA71E", color: "#ffffff" }}
+                >
+                  {especie}
+                </Badge>
               </div>
             </div>
             <div className="justify-between w-full flex">
