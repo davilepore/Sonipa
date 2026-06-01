@@ -40,7 +40,7 @@ export function DogCard({
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition group">
       <div className="relative h-64 overflow-hidden mb-4">
-        <Image src={foto} alt={nome} fill className="object-cover" />
+        <img src={foto} alt={nome} className="w-full h-full object-cover" />
         <div className="absolute top-4 left-4">
           <Badge
             className="hover:opacity-90"
@@ -79,11 +79,10 @@ export function DogCard({
         <div className="fixed inset-0 bg-transparent backdrop-blur-2xl flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md mx-auto shadow-lg">
             <div className="relative h-64 overflow-hidden mb-4">
-              <Image
+              <img
                 src={foto}
                 alt={nome}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform"
+                className="w-full h-full object-cover"
               />
               <div className="absolute top-4 left-4">
                 <Badge
