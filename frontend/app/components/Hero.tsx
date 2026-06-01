@@ -76,14 +76,13 @@ export function Hero({ onAdoptClick }: HeroProps) {
                 Ver cães para adoção
               </Button>
 
-              <Button
-                variant="outline"
-                size="lg"
-                className="text-base px-7 py-3 rounded-xl font-semibold border-2 transition-all duration-200 hover:bg-gray-50"
-                style={{ borderColor: "#23809B", color: "#23809B" }}
+              <Link
+                href="#sobre"
+                className="inline-flex border-2 border-[#23809B] items-center gap-2 text-sm font-medium px-7 py-2 rounded-xl transition-all duration-200 hover:opacity-90 hover:shadow-md"
+                style={{ backgroundColor: "#ffffff", color: "#23809B" }}
               >
                 Saiba mais
-              </Button>
+              </Link>
             </div>
 
             <div>
