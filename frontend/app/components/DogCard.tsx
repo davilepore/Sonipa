@@ -3,7 +3,7 @@
 import { MapPin } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface DogCardProps {
@@ -18,6 +18,11 @@ interface DogCardProps {
   adotante: string | null;
 }
 
+function formatarData(iso: string) {
+  const [year, month, day] = iso.slice(0, 10).split("-");
+  return `${day}/${month}/${year}`;
+}
+
 export function DogCard({
   id,
   nome,
@@ -30,14 +35,8 @@ export function DogCard({
   adotante,
 }: DogCardProps) {
   const [selecionado, setSelecionado] = useState(false);
-  const dataResgateFormatada = new Date(data_resgate).toLocaleDateString(
-    "pt-BR",
-    {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    },
-  );
+  const dataResgateFormatada = formatarData(data_resgate);
+
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition group">
       <div className="relative h-64 overflow-hidden mb-4">
